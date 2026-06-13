@@ -51,24 +51,24 @@ graph TD
   end
 
   %% Przepływ użytkownika
-  ClientA -->|1. Logowanie| FA
-  ClientB -->|1. Logowanie| FA
+  ClientA -->|"1. Logowanie"| FA
+  ClientB -->|"1. Logowanie"| FA
   
-  ClientA -->|2. Request API + JWT| ALB
-  ClientB -->|2. Request API + JWT| ALB
+  ClientA -->|"2. Request API + JWT"| ALB
+  ClientB -->|"2. Request API + JWT"| ALB
 
   %% Logika wewnątrz AWS
   ALB --> ECS
-  ECS -.->|Walidacja Tokenu| FA
-  ECS -->|Prompty LangChain| Bedrock
-  ECS -->|Zapis historii (Tenant ID)| DDB
+  ECS -.->|"Walidacja Tokenu"| FA
+  ECS -->|"Prompty LangChain"| Bedrock
+  ECS -->|"Zapis historii (Tenant ID)"| DDB
   
   %% Monitoring
-  ECS -->|Zgłaszanie wyjątków| Sentry
-  ECS -->|Przesyłanie logów| CW
+  ECS -->|"Zgłaszanie wyjątków"| Sentry
+  ECS -->|"Przesyłanie logów"| CW
 
   %% Automatyzacja
-  GH -->|Uwierzytelnianie bezkluczowe| OIDC
-  GH -->|Push obrazu Docker| ECR
-  ECR -->|Deploy nowej wersji| ECS
-  GH -.->|Aktualizacja Infrastruktury| Terraform
+  GH -->|"Uwierzytelnianie bezkluczowe"| OIDC
+  GH -->|"Push obrazu Docker"| ECR
+  ECR -->|"Deploy nowej wersji"| ECS
+  GH -.->|"Aktualizacja Infrastruktury"| Terraform
